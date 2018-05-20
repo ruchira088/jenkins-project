@@ -17,6 +17,11 @@ podTemplate(
             name: "ubuntu",
             image: "ubuntu",
             ttyEnabled: true
+        ),
+        containerTemplate(
+            name: "java",
+            image: "openjdk:8-jdk",
+            ttyEnabled: true
         )
     ],
     volumes: [
@@ -62,23 +67,25 @@ podTemplate(
             }
         }
 
-        stage("Fetching dependencies") {
+        stage("Fetching deployment utilities") {
             container("ubuntu") {
                 sh """
                     apt-get update && apt-get install git -y
 
                     git clone https://github.com/ruchira088/deployment-utils.git
-
-                    ls deployment-utils
                 """
             }
         }
 
         stage("Running tests (with coverage ?)") {
 
-            container("nodejs") {
+            container("docker") {
                 sh """
-                    node -v
+                    DOCKER_IMAGE_TAG=$JOB_NAME-$BUILD_NUMBER
+
+                    docker build -t \$DOCKER_IMAGE_TAG -f dev-ops/Dockerfile .
+
+                    docker run \$DOCKER_IMAGE_TAG test
                 """
             }
         }
