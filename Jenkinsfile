@@ -65,8 +65,6 @@ podTemplate(
                 sh """
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
-                    cat /greeting.txt
-
                    ls -a /
                                        ls -a
                                        ls -a ../
