@@ -42,6 +42,10 @@ podTemplate(
                 sh """
                     apt-get update && apt-get install git -y
 
+                    echo "hello world" >> /greeting.txt
+
+                    which aws
+
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
             }
@@ -51,6 +55,9 @@ podTemplate(
             container("ubuntu") {
                 sh """
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
+
+                    cat /greeting.txt
+                    which terraform
 
                     beforeApply
 
@@ -65,6 +72,8 @@ podTemplate(
         stage("Running tests with coverage") {
             container("java") {
                 sh """
+                    which terraform
+                    cat /greeting.txt
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
             }
