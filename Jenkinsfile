@@ -42,19 +42,6 @@ podTemplate(
                 sh """
                     apt-get update && apt-get install git -y
 
-                    echo "hello world1" >> greeting1.txt
-                    echo "hello world2" >> ../greeting2.txt
-                    echo "hello world3" >> ../../greeting3.txt
-                    echo "hello world4" >> ../../../greeting4.txt
-                    echo "hello world5" >> ../../../../greeting4.txt
-
-                    ls -a /
-                    ls -a
-                    ls -a ../
-                    ls -a ../../
-                    ls -a ../../../
-                    ls -a ../../../../
-
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
             }
@@ -64,13 +51,6 @@ podTemplate(
             container("ubuntu") {
                 sh """
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
-
-                   ls -a /
-                                       ls -a
-                                       ls -a ../
-                                       ls -a ../../
-                                       ls -a ../../../
-                                       ls -a ../../../../
 
                     beforeApply
 
@@ -85,14 +65,6 @@ podTemplate(
         stage("Running tests with coverage") {
             container("java") {
                 sh """
-                    ls -a /
-                                        ls -a
-                                        ls -a ../
-                                        ls -a ../../
-                                        ls -a ../../../
-                                        ls -a ../../../../
-
-
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
             }
@@ -101,13 +73,6 @@ podTemplate(
         stage("Push Docker image") {
             container("docker") {
                 sh """
-                ls -a /
-                                    ls -a
-                                    ls -a ../
-                                    ls -a ../../
-                                    ls -a ../../../
-                                    ls -a ../../../../
-
                     apk -v --update add bash
 
                     bash deployment-utils/scripts/jenkinsfile/push-docker-image.sh
