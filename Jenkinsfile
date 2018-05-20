@@ -47,6 +47,9 @@ podTemplate(
                     ls -a /
                     ls -a
                     ls -a ../
+                    ls -a ../../
+                    ls -a ../../../
+                    ls -a ../../../../
 
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
@@ -60,9 +63,12 @@ podTemplate(
 
                     cat /greeting.txt
 
-                    ls -a /
-                    ls -a
-                    ls -a ../
+                   ls -a /
+                                       ls -a
+                                       ls -a ../
+                                       ls -a ../../
+                                       ls -a ../../../
+                                       ls -a ../../../../
 
                     beforeApply
 
@@ -78,9 +84,11 @@ podTemplate(
             container("java") {
                 sh """
                     ls -a /
-                    ls -a
-                    ls -a ../
-                    cat /greeting.txt
+                                        ls -a
+                                        ls -a ../
+                                        ls -a ../../
+                                        ls -a ../../../
+                                        ls -a ../../../../
 
 
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
@@ -91,6 +99,13 @@ podTemplate(
         stage("Push Docker image") {
             container("docker") {
                 sh """
+                ls -a /
+                                    ls -a
+                                    ls -a ../
+                                    ls -a ../../
+                                    ls -a ../../../
+                                    ls -a ../../../../
+
                     apk -v --update add bash
 
                     bash deployment-utils/scripts/jenkinsfile/push-docker-image.sh
