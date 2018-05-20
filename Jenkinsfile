@@ -76,13 +76,9 @@ podTemplate(
 
         stage("Running tests with coverage") {
 
-            container("docker") {
+            container("java") {
                 sh """
-                    # DOCKER_IMAGE_TAG=$JOB_NAME-$BUILD_NUMBER
-
-                    # docker build -t \$DOCKER_IMAGE_TAG -f dev-ops/Dockerfile .
-
-                    # docker run \$DOCKER_IMAGE_TAG test
+                    deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
             }
         }
