@@ -54,6 +54,8 @@ podTemplate(
 
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
+                    ls Software
+
                     cd dev-ops/terraform
                     sed -i "s/BACKEND_KEY/`echo $JOB_NAME | tr / -`/g" resources.tf
 
