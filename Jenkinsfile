@@ -54,6 +54,7 @@ podTemplate(
 
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
+                    echo \$terraform
                     ls Software
                     pwd
 
