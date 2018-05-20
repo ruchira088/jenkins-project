@@ -42,7 +42,11 @@ podTemplate(
                 sh """
                     apt-get update && apt-get install git -y
 
-                    echo "hello world" >> /greeting.txt
+                    echo "hello world1" >> greeting1.txt
+                    echo "hello world2" >> ../greeting2.txt
+                    echo "hello world3" >> ../../greeting3.txt
+                    echo "hello world4" >> ../../../greeting4.txt
+                    echo "hello world5" >> ../../../../greeting4.txt
 
                     ls -a /
                     ls -a
