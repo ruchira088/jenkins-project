@@ -55,7 +55,7 @@ podTemplate(
                     beforeApply
 
                     \$terraform apply -auto-approve \
-                        -var docker_repository_name=`echo $JOB_NAME | tr "/" -`
+                        -var docker_repository_name=$JOB_NAME
 
                     afterApply
                 """
