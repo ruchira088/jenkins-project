@@ -50,7 +50,7 @@ podTemplate(
         stage("Apply Terraform") {
             container("ubuntu") {
                 sh """
-                    PROJECT_ROOT=`pwd`
+                    export PROJECT_ROOT=`pwd`
 
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
