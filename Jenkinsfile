@@ -91,6 +91,8 @@ podTemplate(
 
             container("docker") {
                 sh """
+                    apk -v --update add bash
+
                     . deployment-utils/scripts/jenkinsfile/push-docker-image.sh
                 """
             }
