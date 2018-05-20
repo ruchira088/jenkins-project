@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-slim
+FROM openjdk:8-jdk
 
 RUN apt-get update && \
     apt-get install apt-transport-https bc ca-certificates software-properties-common -y
