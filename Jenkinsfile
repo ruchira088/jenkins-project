@@ -44,8 +44,6 @@ podTemplate(
 
                     echo "hello world" >> /greeting.txt
 
-                    which aws
-
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
             }
@@ -57,7 +55,6 @@ podTemplate(
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
                     cat /greeting.txt
-                    which terraform
 
                     beforeApply
 
