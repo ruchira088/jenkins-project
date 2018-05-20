@@ -44,6 +44,8 @@ podTemplate(
 
                     echo "hello world" >> /greeting.txt
 
+                    ls -a /
+
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
             }
@@ -55,6 +57,8 @@ podTemplate(
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
                     cat /greeting.txt
+
+                    ls -a
 
                     beforeApply
 
@@ -69,8 +73,9 @@ podTemplate(
         stage("Running tests with coverage") {
             container("java") {
                 sh """
-                    which terraform
                     cat /greeting.txt
+                    ls -a /
+
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
             }
