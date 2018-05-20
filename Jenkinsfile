@@ -50,32 +50,19 @@ podTemplate(
         stage("Apply Terraform") {
             container("ubuntu") {
                 sh """
-                    apt-get update && apt-get install jq -y
-
-                    export PROJECT_ROOT=`pwd`
-
-                    # This is a comment
                     . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
 
-                    cd dev-ops/terraform
-                    sed -i "s/BACKEND_KEY/`echo $JOB_NAME | tr / -`/g" resources.tf
+                    beforeApply
 
-                    \$terraform init
                     \$terraform apply -auto-approve \
                         -var docker_repository_name=$JOB_NAME
 
-                    \$terraform show
-                    DOCKER_REPOSITORY_URL=`\$terraform output -json | jq .dockerRepositoryUrl.value`
-
-                    echo \$DOCKER_REPOSITORY_URL >> docker-repository-url.txt
-
-                    cd \$PROJECT_ROOT
+                    afterApply
                 """
             }
         }
 
         stage("Running tests with coverage") {
-
             container("java") {
                 sh """
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
@@ -84,7 +71,6 @@ podTemplate(
         }
 
         stage("Push Docker image") {
-
             container("docker") {
                 sh """
                     apk -v --update add bash
