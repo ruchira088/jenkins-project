@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
         bucket =  "terraform.ruchij.com"
-        key = "backends/BACKEND-KEY"
+        key = "backends/BACKEND_KEY"
         region = "ap-southeast-2"
     }
 }
