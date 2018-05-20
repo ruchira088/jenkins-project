@@ -65,6 +65,8 @@ podTemplate(
         stage("Running tests with coverage") {
             container("java") {
                 sh """
+                    export ARTIFACTS_URL="s3://jenkins-artifacts.ruchij.com"
+
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
             }
