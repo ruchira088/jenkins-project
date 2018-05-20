@@ -10,8 +10,8 @@ podTemplate(
         ),
         containerTemplate(
             name: "nodejs",
-            ttyEnabled: true,
             image: "node",
+            ttyEnabled: true
         ),
         containerTemplate(
             name: "ubuntu",
@@ -58,6 +58,18 @@ podTemplate(
                     echo \$DOCKER_REPOSITORY_URL >> docker-repository-url.txt
 
                     cd \$PROJECT_ROOT
+                """
+            }
+        }
+
+        stage("Fetching dependencies") {
+            container("ubuntu") {
+                sh """
+                    apt-get update && apt-get install git -y
+
+                    git clone https://github.com/ruchira088/deployment-utils.git
+
+                    ls deployment-utils
                 """
             }
         }
