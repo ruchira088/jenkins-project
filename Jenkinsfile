@@ -45,6 +45,8 @@ podTemplate(
                     echo "hello world" >> /greeting.txt
 
                     ls -a /
+                    ls -a
+                    ls -a ../
 
                     git clone https://github.com/ruchira088/deployment-utils.git
                 """
@@ -58,7 +60,9 @@ podTemplate(
 
                     cat /greeting.txt
 
+                    ls -a /
                     ls -a
+                    ls -a ../
 
                     beforeApply
 
@@ -73,8 +77,11 @@ podTemplate(
         stage("Running tests with coverage") {
             container("java") {
                 sh """
-                    cat /greeting.txt
                     ls -a /
+                    ls -a
+                    ls -a ../
+                    cat /greeting.txt
+
 
                     deployment-utils/scripts/jenkinsfile/run-tests.sh
                 """
