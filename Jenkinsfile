@@ -37,21 +37,25 @@ podTemplate(
             checkout scm
         }
 
+        stage("Fetching deployment utilities") {
+            container("ubuntu") {
+                sh """
+                    apt-get update && apt-get install git -y
+
+                    git clone https://github.com/ruchira088/deployment-utils.git
+                """
+            }
+        }
+
         stage("Apply Terraform") {
             container("ubuntu") {
                 sh """
-                    apt-get update && apt-get install wget unzip jq -y
-
-                    mkdir Software && \
-                    wget -P Software https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip && \
-                    unzip -d Software Software/terraform_0.11.7_linux_amd64.zip && rm -rf Software/*.zip
-
                     PROJECT_ROOT=`pwd`
+
+                    . deployment-utils/scripts/jenkinsfile/apply-terraform.sh
+
                     cd dev-ops/terraform
-
                     sed -i "s/BACKEND_KEY/`echo $JOB_NAME | tr / -`/g" resources.tf
-
-                    terraform=\$PROJECT_ROOT/Software/terraform
 
                     \$terraform init
                     \$terraform apply -auto-approve \
@@ -63,16 +67,6 @@ podTemplate(
                     echo \$DOCKER_REPOSITORY_URL >> docker-repository-url.txt
 
                     cd \$PROJECT_ROOT
-                """
-            }
-        }
-
-        stage("Fetching deployment utilities") {
-            container("ubuntu") {
-                sh """
-                    apt-get update && apt-get install git -y
-
-                    git clone https://github.com/ruchira088/deployment-utils.git
                 """
             }
         }
